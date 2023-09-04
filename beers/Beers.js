@@ -1,7 +1,9 @@
-import React from 'react'
-import BeerItem from '../beerItem/BeerItem';
-import AvailableBeers from '../availableBeers/AvailableBeers';
-import ContBeer from '../contBeer/ContBeer';
+import React, { useState } from "react";
+import BeerItem from "../beerItem/BeerItem";
+import AvailableBeers from "../availableBeers/AvailableBeers";
+import ContBeer from "../contBeer/ContBeer";
+import ChangeDollar from "../changeDollar/ChangeDollar";
+import NewBeer from "../newBeer/NewBeer";
 
 const Beers = () => {
   const beers = [
@@ -70,17 +72,43 @@ const Beers = () => {
     },
   ];
 
+  const [dollar, setDollar] = useState("");
+
+  const ChangeDollarHandler = (value) => {
+    setDollar(value);
+  };
+
+  // const [show, setShow] = useState(true);
+
+  // const showHandler = () => {
+
+  // }
+
   return (
-  <div>
-    {beers
-    .map((beer) => 
-      <BeerItem key={beer.id} id={beer.id} beerName={beer.beerName} beerStyle={beer.beerStyle} price={beer.price} available={beer.available}/>
-    )}
-    <p>------------</p>
-    <AvailableBeers beers={beers} />
-    <p>------------</p>
-    <ContBeer beers={beers}/>
-  </div>)
+    <div>
+      <NewBeer />
+      <br />
+      <ChangeDollar
+        valueDollar={dollar}
+        onChangeDollarHandler={ChangeDollarHandler}
+      />
+      {beers.map((beer) => (
+        <BeerItem
+          key={beer.id}
+          id={beer.id}
+          beerName={beer.beerName}
+          beerStyle={beer.beerStyle}
+          price={beer.price}
+          available={beer.available}
+          dollar={dollar}
+        />
+      ))}
+      <p>------------</p>
+      <AvailableBeers beers={beers} />
+      <p>------------</p>
+      <ContBeer beers={beers} />
+    </div>
+  );
 };
 
-export default Beers
+export default Beers;
